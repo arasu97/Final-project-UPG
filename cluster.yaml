@@ -1,0 +1,27 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: demo-cluster-kube01
+  region: us-east-1
+
+vpc:
+  id: vpc-0c3b97d72db5b7000
+  subnets:
+    private:
+      us-east-1a:
+        id: subnet-06a86bba80e337de9
+      us-east-1b:
+        id: subnet-07dc8e9de550746a8
+    public:
+      us-east-1a:
+        id: subnet-0e6c22eb5d60bdcfc
+      us-east-1b:
+        id: subnet-0efbabf02599e6719
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t2.small
+    desiredCapacity: 3
+    volumeSize: 10
+    privateNetworking: true
+    availabilityZones: ['us-east-1a', 'us-east-1b']
