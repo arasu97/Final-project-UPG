@@ -1,0 +1,28 @@
+---
+- name: Install AWS CLI
+  hosts: all  # Replace with your actual host group or IP address
+  become: yes  # Run tasks with root privileges
+  
+  tasks:
+    - name: Install unzip package
+      apt:
+        name: unzip
+        state: present
+
+    - name: Download AWS CLI installation package
+      shell: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
+      args:
+        creates: /tmp/awscliv2.zip
+
+    - name: Unzip AWS CLI package
+      shell: |
+        unzip /tmp/awscliv2.zip -d /tmp/awscli
+      args:
+        creates: /tmp/awscli
+
+    - name: Run AWS CLI installation script
+      shell: |
+        sudo /tmp/awscli/aws/install
+      args:
+        creates: /usr/local/aws-cli  # Adjust based on installation path
